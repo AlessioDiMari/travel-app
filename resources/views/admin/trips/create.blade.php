@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Crea Nuovo Viaggio</h1>
-    <form id="trip-form" action="{{ route('admin.trips.store') }}" method="POST">
+    <form id="trip-form" action="{{ route('admin.trips.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group mb-3">
             <label for="title">Titolo</label>
@@ -25,6 +25,12 @@
                     <input type="date" name="days[0][date]" class="form-control" required>
                     <label for="days[0][description]">Descrizione</label>
                     <textarea name="days[0][description]" class="form-control"></textarea>
+                    <label for="days[0][image1]">Immagine 1</label>
+                    <input type="file" name="days[0][image1]" class="form-control">
+                    <label for="days[0][image2]">Immagine 2</label>
+                    <input type="file" name="days[0][image2]" class="form-control">
+                    <label for="days[0][image3]">Immagine 3</label>
+                    <input type="file" name="days[0][image3]" class="form-control">
                     <div id="stops-container-0" class="p-3">
                         <h4>Tappe</h4>
                         <div class="form-group mb-3" id="stop-0-0">
@@ -32,6 +38,12 @@
                             <input type="text" name="days[0][stops][0][name]" class="form-control" required>
                             <label for="days[0][stops][0][description]">Descrizione</label>
                             <textarea name="days[0][stops][0][description]" class="form-control"></textarea>
+                            <label for="days[0][stops][0][image1]">Immagine 1</label>
+                            <input type="file" name="days[0][stops][0][image1]" class="form-control">
+                            <label for="days[0][stops][0][image2]">Immagine 2</label>
+                            <input type="file" name="days[0][stops][0][image2]" class="form-control">
+                            <label for="days[0][stops][0][image3]">Immagine 3</label>
+                            <input type="file" name="days[0][stops][0][image3]" class="form-control">
                             <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-0-0">Elimina Tappa</button>
                         </div>
                     </div>
@@ -57,6 +69,12 @@
                     <input type="date" name="days[${index}][date]" class="form-control" required>
                     <label for="days[${index}][description]">Descrizione</label>
                     <textarea name="days[${index}][description]" class="form-control"></textarea>
+                    <label for="days[${index}][image1]">Immagine 1</label>
+                    <input type="file" name="days[${index}][image1]" class="form-control">
+                    <label for="days[${index}][image2]">Immagine 2</label>
+                    <input type="file" name="days[${index}][image2]" class="form-control">
+                    <label for="days[${index}][image3]">Immagine 3</label>
+                    <input type="file" name="days[${index}][image3]" class="form-control">
                     <div id="stops-container-${index}" class="p-3">
                         <h4>Tappe</h4>
                         <div class="form-group mb-3" id="stop-${index}-0">
@@ -64,6 +82,12 @@
                             <input type="text" name="days[${index}][stops][0][name]" class="form-control" required>
                             <label for="days[${index}][stops][0][description]">Descrizione</label>
                             <textarea name="days[${index}][stops][0][description]" class="form-control"></textarea>
+                            <label for="days[${index}][stops][0][image1]">Immagine 1</label>
+                            <input type="file" name="days[${index}][stops][0][image1]" class="form-control">
+                            <label for="days[${index}][stops][0][image2]">Immagine 2</label>
+                            <input type="file" name="days[${index}][stops][0][image2]" class="form-control">
+                            <label for="days[${index}][stops][0][image3]">Immagine 3</label>
+                            <input type="file" name="days[${index}][stops][0][image3]" class="form-control">
                             <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-${index}-0">Elimina Tappa</button>
                         </div>
                     </div>
@@ -87,6 +111,12 @@
                     <input type="text" name="days[${dayIndex}][stops][${index}][name]" class="form-control" required>
                     <label for="days[${dayIndex}][stops][${index}][description]">Descrizione</label>
                     <textarea name="days[${dayIndex}][stops][${index}][description]" class="form-control"></textarea>
+                    <label for="days[${dayIndex}][stops][${index}][image1]">Immagine 1</label>
+                    <input type="file" name="days[${dayIndex}][stops][${index}][image1]" class="form-control">
+                    <label for="days[${dayIndex}][stops][${index}][image2]">Immagine 2</label>
+                    <input type="file" name="days[${dayIndex}][stops][${index}][image2]" class="form-control">
+                    <label for="days[${dayIndex}][stops][${index}][image3]">Immagine 3</label>
+                    <input type="file" name="days[${dayIndex}][stops][${index}][image3]" class="form-control">
                     <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-${dayIndex}-${index}">Elimina Tappa</button>
                 </div>
             `;

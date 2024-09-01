@@ -28,9 +28,15 @@ class StoreTripRequest extends FormRequest
             'days' => 'required|array',
             'days.*.date' => 'required|date',
             'days.*.description' => 'nullable|string',
+            'days.*.image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'days.*.image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'days.*.image3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'days.*.stops' => 'required|array',
             'days.*.stops.*.name' => 'required|string|max:255',
             'days.*.stops.*.description' => 'nullable|string',
+            'days.*.stops.*.image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'days.*.stops.*.image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'days.*.stops.*.image3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

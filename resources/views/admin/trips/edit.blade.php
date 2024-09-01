@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Modifica Viaggio</h1>
-    <form id="trip-form" action="{{ route('admin.trips.update', $trip->id) }}" method="POST">
+    <form id="trip-form" action="{{ route('admin.trips.update', $trip->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-group mb-3">
@@ -28,6 +28,12 @@
                     <input type="date" name="days[{{ $index }}][date]" class="form-control" value="{{ $day->date }}" required>
                     <label for="days[{{ $index }}][description]">Descrizione</label>
                     <textarea name="days[{{ $index }}][description]" class="form-control">{{ $day->description }}</textarea>
+                    <label for="days[{{ $index }}][image1]">Immagine 1</label>
+                    <input type="file" name="days[{{ $index }}][image1]" class="form-control">
+                    <label for="days[{{ $index }}][image2]">Immagine 2</label>
+                    <input type="file" name="days[{{ $index }}][image2]" class="form-control">
+                    <label for="days[{{ $index }}][image3]">Immagine 3</label>
+                    <input type="file" name="days[{{ $index }}][image3]" class="form-control">
                     <div id="stops-container-{{ $index }}" class="p-3">
                         <h4>Tappe</h4>
                         @foreach ($day->stops as $stopIndex => $stop)
@@ -36,6 +42,12 @@
                                 <input type="text" name="days[{{ $index }}][stops][{{ $stopIndex }}][name]" class="form-control" value="{{ $stop->name }}" required>
                                 <label for="days[{{ $index }}][stops][{{ $stopIndex }}][description]">Descrizione</label>
                                 <textarea name="days[{{ $index }}][stops][{{ $stopIndex }}][description]" class="form-control">{{ $stop->description }}</textarea>
+                                <label for="days[{{ $index }}][stops][{{ $stopIndex }}][image1]">Immagine 1</label>
+                                <input type="file" name="days[{{ $index }}][stops][{{ $stopIndex }}][image1]" class="form-control">
+                                <label for="days[{{ $index }}][stops][{{ $stopIndex }}][image2]">Immagine 2</label>
+                                <input type="file" name="days[{{ $index }}][stops][{{ $stopIndex }}][image2]" class="form-control">
+                                <label for="days[{{ $index }}][stops][{{ $stopIndex }}][image3]">Immagine 3</label>
+                                <input type="file" name="days[{{ $index }}][stops][{{ $stopIndex }}][image3]" class="form-control">
                                 <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-{{ $index }}-{{ $stopIndex }}">Elimina Tappa</button>
                             </div>
                         @endforeach
@@ -63,6 +75,12 @@
                     <input type="date" name="days[${index}][date]" class="form-control" required>
                     <label for="days[${index}][description]">Descrizione</label>
                     <textarea name="days[${index}][description]" class="form-control"></textarea>
+                    <label for="days[${index}][image1]">Immagine 1</label>
+                    <input type="file" name="days[${index}][image1]" class="form-control">
+                    <label for="days[${index}][image2]">Immagine 2</label>
+                    <input type="file" name="days[${index}][image2]" class="form-control">
+                    <label for="days[${index}][image3]">Immagine 3</label>
+                    <input type="file" name="days[${index}][image3]" class="form-control">
                     <div id="stops-container-${index}" class="p-3">
                         <h4>Tappe</h4>
                         <div class="form-group mb-3" id="stop-${index}-0">
@@ -70,6 +88,12 @@
                             <input type="text" name="days[${index}][stops][0][name]" class="form-control" required>
                             <label for="days[${index}][stops][0][description]">Descrizione</label>
                             <textarea name="days[${index}][stops][0][description]" class="form-control"></textarea>
+                            <label for="days[${index}][stops][0][image1]">Immagine 1</label>
+                            <input type="file" name="days[${index}][stops][0][image1]" class="form-control">
+                            <label for="days[${index}][stops][0][image2]">Immagine 2</label>
+                            <input type="file" name="days[${index}][stops][0][image2]" class="form-control">
+                            <label for="days[${index}][stops][0][image3]">Immagine 3</label>
+                            <input type="file" name="days[${index}][stops][0][image3]" class="form-control">
                             <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-${index}-0">Elimina Tappa</button>
                         </div>
                     </div>
@@ -93,6 +117,12 @@
                     <input type="text" name="days[${dayIndex}][stops][${index}][name]" class="form-control" required>
                     <label for="days[${dayIndex}][stops][${index}][description]">Descrizione</label>
                     <textarea name="days[${dayIndex}][stops][${index}][description]" class="form-control"></textarea>
+                    <label for="days[${dayIndex}][stops][${index}][image1]">Immagine 1</label>
+                    <input type="file" name="days[${dayIndex}][stops][${index}][image1]" class="form-control">
+                    <label for="days[${dayIndex}][stops][${index}][image2]">Immagine 2</label>
+                    <input type="file" name="days[${dayIndex}][stops][${index}][image2]" class="form-control">
+                    <label for="days[${dayIndex}][stops][${index}][image3]">Immagine 3</label>
+                    <input type="file" name="days[${dayIndex}][stops][${index}][image3]" class="form-control">
                     <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-${dayIndex}-${index}">Elimina Tappa</button>
                 </div>
             `;
