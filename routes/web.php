@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,16 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::middleware(['auth', 'verified'])
+        ->name('admin.')
+        ->prefix('admin')
+        ->group(function() {
+            // qui ci metto tutte le rotte che voglio che siano:
+                // raggruppate sotto lo stesso middelware
+                // i loro nomi inizino tutti con "admin.
+                // tutti i loro url inizino con "admin/"
+                
+            Route::get('/', [DashboardController::class, 'index'])->name('index');
+        }
+);
