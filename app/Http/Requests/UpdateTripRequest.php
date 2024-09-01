@@ -28,6 +28,9 @@ class UpdateTripRequest extends FormRequest
             'days' => 'required|array',
             'days.*.date' => 'required|date',
             'days.*.description' => 'nullable|string',
+            'days.*.stops' => 'required|array',
+            'days.*.stops.*.name' => 'required|string|max:255',
+            'days.*.stops.*.description' => 'nullable|string',
         ];
     }
 }

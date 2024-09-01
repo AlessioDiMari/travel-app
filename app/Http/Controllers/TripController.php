@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Trip;
 use App\Models\Day;
+use App\Models\Stop;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
 use Illuminate\Http\Request;
@@ -26,7 +27,14 @@ class TripController extends Controller
         $trip = Trip::create($request->validated());
 
         foreach ($request->days as $dayData) {
-            $trip->days()->create($dayData);
+            $day = $trip->days()->create([
+                'date' => $dayData['date'],
+                'description' => $dayData['description'],
+            ]);
+
+            foreach ($dayData['stops'] as $stopData) {
+                $day->stops()->create($stopData);
+            }
         }
 
         return redirect()->route('admin.trips.index');
@@ -48,7 +56,14 @@ class TripController extends Controller
 
         $trip->days()->delete();
         foreach ($request->days as $dayData) {
-            $trip->days()->create($dayData);
+            $day = $trip->days()->create([
+                'date' => $dayData['date'],
+                'description' => $dayData['description'],
+            ]);
+
+            foreach ($dayData['stops'] as $stopData) {
+                $day->stops()->create($stopData);
+            }
         }
 
         return redirect()->route('admin.trips.index');

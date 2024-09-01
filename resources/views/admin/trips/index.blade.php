@@ -16,6 +16,15 @@
                         <li>
                             <p>{{ $day->date }}</p>
                             <p>{{ $day->description }}</p>
+                            <h5>Tappe</h5>
+                            <ul>
+                                @foreach ($day->stops as $stop)
+                                    <li>
+                                        <p>{{ $stop->name }}</p>
+                                        <p>{{ $stop->description }}</p>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </li>
                     @endforeach
                 </ul>
