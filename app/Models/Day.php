@@ -13,6 +13,9 @@ class Day extends Model
         'trip_id',
         'date',
         'description',
+        'image1',
+        'image2',
+        'image3',
     ];
 
     public function trip()
