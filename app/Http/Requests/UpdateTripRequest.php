@@ -37,6 +37,7 @@ class UpdateTripRequest extends FormRequest
             'days.*.stops.*.image1' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'days.*.stops.*.image2' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'days.*.stops.*.image3' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'days.*.stops.*.destination' => 'nullable|string|max:255',
         ];
     }
 }

@@ -16,6 +16,7 @@ class Stop extends Model
         'image1',
         'image2',
         'image3',
+        'destination',
     ];
 
     public function day()

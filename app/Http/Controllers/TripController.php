@@ -8,6 +8,7 @@ use App\Models\Stop;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TripController extends Controller
 {
@@ -30,10 +31,20 @@ class TripController extends Controller
             $day = $trip->days()->create([
                 'date' => $dayData['date'],
                 'description' => $dayData['description'],
+                'image1' => isset($dayData['image1']) ? $this->uploadImage($dayData['image1']) : null,
+                'image2' => isset($dayData['image2']) ? $this->uploadImage($dayData['image2']) : null,
+                'image3' => isset($dayData['image3']) ? $this->uploadImage($dayData['image3']) : null,
             ]);
 
             foreach ($dayData['stops'] as $stopData) {
-                $day->stops()->create($stopData);
+                $day->stops()->create([
+                    'name' => $stopData['name'],
+                    'description' => $stopData['description'],
+                    'image1' => isset($stopData['image1']) ? $this->uploadImage($stopData['image1']) : null,
+                    'image2' => isset($stopData['image2']) ? $this->uploadImage($stopData['image2']) : null,
+                    'image3' => isset($stopData['image3']) ? $this->uploadImage($stopData['image3']) : null,
+                    'destination' => $stopData['destination'],
+                ]);
             }
         }
 
@@ -59,10 +70,20 @@ class TripController extends Controller
             $day = $trip->days()->create([
                 'date' => $dayData['date'],
                 'description' => $dayData['description'],
+                'image1' => isset($dayData['image1']) ? $this->uploadImage($dayData['image1']) : null,
+                'image2' => isset($dayData['image2']) ? $this->uploadImage($dayData['image2']) : null,
+                'image3' => isset($dayData['image3']) ? $this->uploadImage($dayData['image3']) : null,
             ]);
 
             foreach ($dayData['stops'] as $stopData) {
-                $day->stops()->create($stopData);
+                $day->stops()->create([
+                    'name' => $stopData['name'],
+                    'description' => $stopData['description'],
+                    'image1' => isset($stopData['image1']) ? $this->uploadImage($stopData['image1']) : null,
+                    'image2' => isset($stopData['image2']) ? $this->uploadImage($stopData['image2']) : null,
+                    'image3' => isset($stopData['image3']) ? $this->uploadImage($stopData['image3']) : null,
+                    'destination' => $stopData['destination'],
+                ]);
             }
         }
 
@@ -73,5 +94,13 @@ class TripController extends Controller
     {
         $trip->delete();
         return redirect()->route('admin.trips.index');
+    }
+
+    private function uploadImage($image)
+    {
+        if ($image) {
+            return Storage::disk('public')->put('images', $image);
+        }
+        return null;
     }
 }
