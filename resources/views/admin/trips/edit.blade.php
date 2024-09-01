@@ -6,70 +6,76 @@
     <form action="{{ route('admin.trips.update', $trip->id) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="title">Titolo</label>
             <input type="text" name="title" class="form-control" value="{{ $trip->title }}" required>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="description">Descrizione</label>
             <textarea name="description" class="form-control">{{ $trip->description }}</textarea>
         </div>
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="date">Data</label>
             <input type="date" name="date" class="form-control" value="{{ $trip->date }}" required>
         </div>
-        <div id="days-container">
+        <div id="days-container" class="p-3">
             <h3>Giornate</h3>
             @foreach ($trip->days as $index => $day)
-            <div class="form-group" id="day-{{ $index }}">
-                <label for="days[{{ $index }}][date]">Data</label>
-                <input type="date" name="days[{{ $index }}][date]" class="form-control" value="{{ $day->date }}" required>
-                <label for="days[{{ $index }}][description]">Descrizione</label>
-                <textarea name="days[{{ $index }}][description]" class="form-control">{{ $day->description }}</textarea>
-                <div id="stops-container-{{ $index }}">
-                    <h4>Tappe</h4>
-                    @foreach ($day->stops as $stopIndex => $stop)
-                        <div class="form-group" id="stop-{{ $index }}-{{ $stopIndex }}">
-                            <label for="days[{{ $index }}][stops][{{ $stopIndex }}][name]">Nome</label>
-                            <input type="text" name="days[{{ $index }}][stops][{{ $stopIndex }}][name]" class="form-control" value="{{ $stop->name }}" required>
-                            <label for="days[{{ $index }}][stops][{{ $stopIndex }}][description]">Descrizione</label>
-                            <textarea name="days[{{ $index }}][stops][{{ $stopIndex }}][description]" class="form-control">{{ $stop->description }}</textarea>
-                            <button type="button" class="btn btn-danger remove-stop" data-stop-id="stop-{{ $index }}-{{ $stopIndex }}">Elimina Tappa</button>
-                        </div>
-                    @endforeach
+            <div class="day-group" id="day-group-{{ $index }}">
+                <h3>Giornata {{ $index + 1 }}</h3>
+                <div class="form-group mb-3" id="day-{{ $index }}">
+                    <label for="days[{{ $index }}][date]">Data</label>
+                    <input type="date" name="days[{{ $index }}][date]" class="form-control" value="{{ $day->date }}" required>
+                    <label for="days[{{ $index }}][description]">Descrizione</label>
+                    <textarea name="days[{{ $index }}][description]" class="form-control">{{ $day->description }}</textarea>
+                    <div id="stops-container-{{ $index }}" class="p-3">
+                        <h4>Tappe</h4>
+                        @foreach ($day->stops as $stopIndex => $stop)
+                            <div class="form-group mb-3" id="stop-{{ $index }}-{{ $stopIndex }}">
+                                <label for="days[{{ $index }}][stops][{{ $stopIndex }}][name]">Nome tappa</label>
+                                <input type="text" name="days[{{ $index }}][stops][{{ $stopIndex }}][name]" class="form-control" value="{{ $stop->name }}" required>
+                                <label for="days[{{ $index }}][stops][{{ $stopIndex }}][description]">Descrizione</label>
+                                <textarea name="days[{{ $index }}][stops][{{ $stopIndex }}][description]" class="form-control">{{ $stop->description }}</textarea>
+                                <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-{{ $index }}-{{ $stopIndex }}">Elimina Tappa</button>
+                            </div>
+                        @endforeach
+                    </div>
+                    <button type="button" class="btn btn-secondary add-stop mt-2" data-day-index="{{ $index }}">Aggiungi Tappa</button>
+                    <button type="button" class="btn btn-danger remove-day mt-2" data-day-id="day-group-{{ $index }}">Elimina Giornata</button>
                 </div>
-                <button type="button" class="btn btn-secondary add-stop" data-day-index="{{ $index }}">Aggiungi Tappa</button>
-                <button type="button" class="btn btn-danger remove-day" data-day-id="day-{{ $index }}">Elimina Giornata</button>
             </div>
             @endforeach
         </div>
-        <button type="button" id="add-day" class="btn btn-secondary">Aggiungi Giornata</button>
-        <button type="submit" class="btn btn-primary">Salva</button>
+        <button type="button" id="add-day" class="btn btn-secondary mt-3">Aggiungi Giornata</button>
+        <button type="submit" class="btn btn-primary mt-3">Salva</button>
     </form>
 </div>
 
 <script>
     document.getElementById('add-day').addEventListener('click', function() {
         const container = document.getElementById('days-container');
-        const index = container.children.length;
+        const index = container.children.length - 1;
         const dayForm = `
-            <div class="form-group" id="day-${index}">
-                <label for="days[${index}][date]">Data</label>
-                <input type="date" name="days[${index}][date]" class="form-control" required>
-                <label for="days[${index}][description]">Descrizione</label>
-                <textarea name="days[${index}][description]" class="form-control"></textarea>
-                <div id="stops-container-${index}">
-                    <h4>Tappe</h4>
-                    <div class="form-group" id="stop-${index}-0">
-                        <label for="days[${index}][stops][0][name]">Nome</label>
-                        <input type="text" name="days[${index}][stops][0][name]" class="form-control" required>
-                        <label for="days[${index}][stops][0][description]">Descrizione</label>
-                        <textarea name="days[${index}][stops][0][description]" class="form-control"></textarea>
-                        <button type="button" class="btn btn-danger remove-stop" data-stop-id="stop-${index}-0">Elimina Tappa</button>
+            <div class="day-group" id="day-group-${index}">
+                <h3>Giornata ${index + 1}</h3>
+                <div class="form-group mb-3" id="day-${index}">
+                    <label for="days[${index}][date]">Data</label>
+                    <input type="date" name="days[${index}][date]" class="form-control" required>
+                    <label for="days[${index}][description]">Descrizione</label>
+                    <textarea name="days[${index}][description]" class="form-control"></textarea>
+                    <div id="stops-container-${index}" class="p-3">
+                        <h4>Tappe</h4>
+                        <div class="form-group mb-3" id="stop-${index}-0">
+                            <label for="days[${index}][stops][0][name]">Nome tappa</label>
+                            <input type="text" name="days[${index}][stops][0][name]" class="form-control" required>
+                            <label for="days[${index}][stops][0][description]">Descrizione</label>
+                            <textarea name="days[${index}][stops][0][description]" class="form-control"></textarea>
+                            <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-${index}-0">Elimina Tappa</button>
+                        </div>
                     </div>
+                    <button type="button" class="btn btn-secondary add-stop mt-2" data-day-index="${index}">Aggiungi Tappa</button>
+                    <button type="button" class="btn btn-danger remove-day mt-2" data-day-id="day-group-${index}">Elimina Giornata</button>
                 </div>
-                <button type="button" class="btn btn-secondary add-stop" data-day-index="${index}">Aggiungi Tappa</button>
-                <button type="button" class="btn btn-danger remove-day" data-day-id="day-${index}">Elimina Giornata</button>
             </div>
         `;
         container.insertAdjacentHTML('beforeend', dayForm);
@@ -81,12 +87,12 @@
             const container = document.getElementById(`stops-container-${dayIndex}`);
             const index = container.children.length;
             const stopForm = `
-                <div class="form-group" id="stop-${dayIndex}-${index}">
-                    <label for="days[${dayIndex}][stops][${index}][name]">Nome</label>
+                <div class="form-group mb-3" id="stop-${dayIndex}-${index}">
+                    <label for="days[${dayIndex}][stops][${index}][name]">Nome tappa</label>
                     <input type="text" name="days[${dayIndex}][stops][${index}][name]" class="form-control" required>
                     <label for="days[${dayIndex}][stops][${index}][description]">Descrizione</label>
                     <textarea name="days[${dayIndex}][stops][${index}][description]" class="form-control"></textarea>
-                    <button type="button" class="btn btn-danger remove-stop" data-stop-id="stop-${dayIndex}-${index}">Elimina Tappa</button>
+                    <button type="button" class="btn btn-danger remove-stop mt-2" data-stop-id="stop-${dayIndex}-${index}">Elimina Tappa</button>
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', stopForm);
