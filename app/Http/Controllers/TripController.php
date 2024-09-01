@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trip;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTripRequest;
 use App\Http\Requests\UpdateTripRequest;
+use Illuminate\Http\Request;
 
 class TripController extends Controller
 {
@@ -14,7 +14,8 @@ class TripController extends Controller
      */
     public function index()
     {
-        //
+        $trips = Trip::all();
+        return view('admin.trips.index', compact('trips'));
     }
 
     /**
@@ -22,7 +23,7 @@ class TripController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.trips.create');
     }
 
     /**
@@ -30,7 +31,8 @@ class TripController extends Controller
      */
     public function store(StoreTripRequest $request)
     {
-        //
+        Trip::create($request->validated());
+        return redirect()->route('admin.trips.index');
     }
 
     /**
@@ -38,7 +40,7 @@ class TripController extends Controller
      */
     public function show(Trip $trip)
     {
-        //
+        return view('admin.trips.show', compact('trip'));
     }
 
     /**
@@ -46,7 +48,7 @@ class TripController extends Controller
      */
     public function edit(Trip $trip)
     {
-        //
+        return view('admin.trips.edit', compact('trip'));
     }
 
     /**
@@ -54,7 +56,8 @@ class TripController extends Controller
      */
     public function update(UpdateTripRequest $request, Trip $trip)
     {
-        //
+        $trip->update($request->validated());
+        return redirect()->route('admin.trips.index');
     }
 
     /**
@@ -62,6 +65,7 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        //
+        $trip->delete();
+        return redirect()->route('admin.trips.index');
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TripController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,7 @@ Route::middleware(['auth', 'verified'])
                 // tutti i loro url inizino con "admin/"
                 
             Route::get('/', [DashboardController::class, 'index'])->name('index');
+
+            Route::resource('trips', TripController::class);
         }
 );
