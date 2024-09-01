@@ -25,6 +25,9 @@ class StoreTripRequest extends FormRequest
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'date' => 'required|date',
+            'days' => 'required|array',
+            'days.*.date' => 'required|date',
+            'days.*.description' => 'nullable|string',
         ];
     }
 }
