@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Modifica Viaggio</h1>
-    <form action="{{ route('admin.trips.update', $trip->id) }}" method="POST">
+    <form id="trip-form" action="{{ route('admin.trips.update', $trip->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group mb-3">
@@ -54,7 +54,7 @@
 <script>
     document.getElementById('add-day').addEventListener('click', function() {
         const container = document.getElementById('days-container');
-        const index = container.children.length - 1;
+        const index = container.children.length;
         const dayForm = `
             <div class="day-group" id="day-group-${index}">
                 <h3>Giornata ${index + 1}</h3>
@@ -79,6 +79,7 @@
             </div>
         `;
         container.insertAdjacentHTML('beforeend', dayForm);
+        saveProgress();
     });
 
     document.addEventListener('click', function(event) {
@@ -96,17 +97,46 @@
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', stopForm);
+            saveProgress();
         }
 
         if (event.target.classList.contains('remove-stop')) {
             const stopId = event.target.getAttribute('data-stop-id');
             document.getElementById(stopId).remove();
+            saveProgress();
         }
 
         if (event.target.classList.contains('remove-day')) {
             const dayId = event.target.getAttribute('data-day-id');
             document.getElementById(dayId).remove();
+            saveProgress();
         }
     });
+
+    function saveProgress() {
+        const form = document.getElementById('trip-form');
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+        localStorage.setItem('tripProgress', JSON.stringify(data));
+    }
+
+    function loadProgress() {
+        const data = JSON.parse(localStorage.getItem('tripProgress'));
+        if (data) {
+            for (const key in data) {
+                if (data.hasOwnProperty(key)) {
+                    const element = document.querySelector(`[name="${key}"]`);
+                    if (element) {
+                        element.value = data[key];
+                    }
+                }
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProgress);
 </script>
 @endsection
